@@ -1,0 +1,60 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies (root)
+        run: npm install
+
+      - name: Install dependencies (server)
+        run: cd server && npm install
+
+      - name: Install dependencies (client)
+        run: cd client && npm install
+
+      - name: Run server tests
+        run: cd server && npm run test:coverage
+
+      - name: Run server linter
+        run: cd server && npm run lint
+
+      - name: Run client linter
+        run: cd client && npm run lint
+
+      - name: Type check (server)
+        run: cd server && npm run type-check
+
+      - name: Type check (client)
+        run: cd client && npm run type-check
+
+      - name: Build server
+        run: cd server && npm run build
+
+      - name: Build client
+        run: cd client && npm run build
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        if: matrix.node-version == '20.x'
+        with:
+          files: ./server/coverage/coverage-final.json
