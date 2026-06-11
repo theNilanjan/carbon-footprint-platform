@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border;
+}
+
+body {
+  @apply bg-gradient-to-br from-eco-50 to-blue-50 text-gray-800;
+}
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  @apply outline-2 outline-offset-2 outline-eco-500;
+}
+
+::placeholder {
+  @apply text-gray-400;
+}
