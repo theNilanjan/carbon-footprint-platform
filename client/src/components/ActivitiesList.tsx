@@ -1,9 +1,6 @@
-/**
- * Activities List Component
- */
-
-import { formatEmissions, formatDate, getCategoryIcon } from '../utils/helpers';
+import { formatEmissions, formatDate, getCategoryLightColor, getCategoryIcon } from '../utils/helpers';
 import type { Activity } from '../types';
+import { Trash2, Calendar, FileText } from 'lucide-react';
 
 interface ActivitiesListProps {
   activities: Activity[] | null;
@@ -13,19 +10,13 @@ interface ActivitiesListProps {
 }
 
 export function ActivitiesList({ activities, loading, error, onDelete }: ActivitiesListProps) {
-  if (error) {
-    return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
-        Failed to load activities: {error}
-      </div>
-    );
-  }
+  if (error) return null; // Error handled in App
 
   if (loading) {
     return (
-      <div className="space-y-3">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-gray-200 rounded-lg h-20 animate-pulse" />
+      <div className="space-y-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="glass-card h-24 animate-pulse bg-white/40" />
         ))}
       </div>
     );
@@ -33,61 +24,82 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
 
   if (!activities || activities.length === 0) {
     return (
-      <div className="bg-gray-50 rounded-lg p-8 text-center text-gray-500">
-        <p className="text-lg">No activities logged yet</p>
-        <p className="text-sm mt-2">Start logging activities to track your carbon footprint</p>
+      <div className="glass-card p-12 text-center flex flex-col items-center justify-center border-dashed border-2 border-slate-200">
+        <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4 text-slate-400">
+          <FileText size={32} />
+        </div>
+        <h3 className="text-xl font-bold text-slate-700 mb-2">No activities yet</h3>
+        <p className="text-slate-500 max-w-sm mx-auto">Start logging your daily activities to build your carbon footprint profile.</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-3">
-      <h2 className="text-2xl font-bold text-eco-700 mb-4">Recent Activities</h2>
-      <div className="grid gap-3 max-h-96 overflow-y-auto">
-        {activities.slice().reverse().map((activity) => (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between mb-6 px-2">
+        <h2 className="text-xl font-bold text-slate-800">Recent Activities</h2>
+        <span className="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1 rounded-full">{activities.length} total</span>
+      </div>
+      
+      <div className="grid gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
+        {activities.slice().reverse().map((activity) => {
+          const lightColorClass = getCategoryLightColor(activity.category);
+          
+          return (
           <div
             key={activity.id}
-            className="bg-white rounded-lg shadow p-4 flex items-center justify-between hover:shadow-md transition"
+            className="glass-card p-5 flex flex-col sm:flex-row sm:items-center justify-between group hover:border-eco-200 transition-colors"
           >
-            <div className="flex items-center gap-3 flex-1">
-              <span className="text-2xl" aria-hidden="true">
-                {getCategoryIcon(activity.category)}
-              </span>
+            <div className="flex items-start sm:items-center gap-4 flex-1 mb-4 sm:mb-0">
+              <div className={`p-3 rounded-xl ${lightColorClass} shrink-0`}>
+                {getCategoryIcon(activity.category, 20)}
+              </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 capitalize">
-                  {activity.type}
-                </h3>
-                <div className="text-sm text-gray-500 flex gap-4 mt-1">
-                  <span>
-                    {activity.value} {activity.unit}
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-bold text-slate-800 capitalize text-lg">
+                    {activity.type}
+                  </h3>
+                  <span className="text-xs font-semibold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md uppercase">
+                    {activity.category}
                   </span>
-                  <span>{formatDate(activity.date)}</span>
                 </div>
+                
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium text-slate-500">
+                  <span className="flex items-center gap-1">
+                    <span className="text-slate-700 font-bold">{activity.value}</span> {activity.unit}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Calendar size={14} className="text-slate-400" />
+                    {formatDate(activity.date)}
+                  </span>
+                </div>
+                
                 {activity.description && (
-                  <p className="text-sm text-gray-600 mt-1">{activity.description}</p>
+                  <p className="text-sm text-slate-600 mt-2 bg-slate-50 p-2 rounded-lg inline-block w-full">{activity.description}</p>
                 )}
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <div className="font-semibold text-eco-600">
+            
+            <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-48 pt-4 sm:pt-0 border-t sm:border-t-0 border-slate-100 sm:border-l sm:pl-6">
+              <div className="text-left sm:text-right">
+                <div className="text-sm font-semibold text-slate-500 mb-0.5">Emissions</div>
+                <div className="font-black text-lg text-eco-600 tracking-tight">
                   {formatEmissions(activity.carbonEmissions || 0)}
                 </div>
-                <div className="text-xs text-gray-500">CO₂</div>
               </div>
               {onDelete && (
                 <button
                   onClick={() => activity.id && onDelete(activity.id)}
-                  className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded transition"
+                  className="text-slate-400 hover:text-red-500 p-2.5 hover:bg-red-50 rounded-xl transition-all duration-200"
                   aria-label="Delete activity"
                   title="Delete this activity"
                 >
-                  ✕
+                  <Trash2 size={18} />
                 </button>
               )}
             </div>
           </div>
-        ))}
+        )})}
       </div>
     </div>
   );

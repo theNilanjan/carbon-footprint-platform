@@ -1,9 +1,6 @@
-/**
- * Recommendations Component
- */
-
-import { getRecommendationIcon, formatEmissions } from '../utils/helpers';
+import { getRecommendationIcon, formatEmissions, getCategoryLightColor } from '../utils/helpers';
 import type { Recommendation } from '../types';
+import { Sparkles, ArrowRight } from 'lucide-react';
 
 interface RecommendationsProps {
   recommendations: Recommendation[] | null;
@@ -12,20 +9,13 @@ interface RecommendationsProps {
 }
 
 export function Recommendations({ recommendations, loading, error }: RecommendationsProps) {
-  if (error) {
-    return (
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-        <p className="text-blue-800 font-medium">💡 No recommendations yet</p>
-        <p className="text-blue-700 text-sm mt-2">{error}</p>
-      </div>
-    );
-  }
+  if (error) return null; // Error handled in App
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-gray-200 rounded-lg h-24 animate-pulse" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="glass-card h-40 animate-pulse bg-white/40" />
         ))}
       </div>
     );
@@ -33,39 +23,58 @@ export function Recommendations({ recommendations, loading, error }: Recommendat
 
   if (!recommendations || recommendations.length === 0) {
     return (
-      <div className="bg-gray-50 rounded-lg p-6 text-center text-gray-500">
-        <p>No recommendations available yet</p>
+      <div className="glass-card p-12 text-center flex flex-col items-center justify-center border-dashed border-2 border-slate-200">
+        <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-4 text-amber-500">
+          <Sparkles size={32} />
+        </div>
+        <h3 className="text-xl font-bold text-slate-700 mb-2">No recommendations yet</h3>
+        <p className="text-slate-500 max-w-sm mx-auto">Log more activities across different categories to get personalized tips for reducing your footprint.</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-eco-700 mb-6">Personalized Recommendations</h2>
-      {recommendations.map((rec, idx) => (
-        <div
-          key={idx}
-          className="bg-white rounded-lg shadow-md p-6 border-l-4 border-eco-500 hover:shadow-lg transition"
-        >
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl" aria-hidden="true">
-                {getRecommendationIcon(rec.category)}
-              </span>
-              <div>
-                <h3 className="font-semibold capitalize text-gray-900">{rec.category}</h3>
-                <p className="text-gray-700 mt-2 leading-relaxed">{rec.recommendation}</p>
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 mb-2 px-2">
+         <div className="bg-amber-100 text-amber-600 p-2 rounded-xl">
+           <Sparkles size={20} />
+         </div>
+         <div>
+           <h2 className="text-xl font-bold text-slate-800">AI-Powered Insights</h2>
+           <p className="text-sm font-medium text-slate-500">Personalized tips based on your activity patterns</p>
+         </div>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {recommendations.map((rec, idx) => {
+          const lightColorClass = getCategoryLightColor(rec.category);
+          
+          return (
+          <div
+            key={idx}
+            className="glass-card p-6 flex flex-col group hover:-translate-y-1 hover:shadow-xl hover:shadow-eco-500/10 transition-all duration-300"
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className={`p-3 rounded-xl ${lightColorClass}`}>
+                {getRecommendationIcon(rec.category, 24)}
               </div>
+              <span
+                className="text-xs font-bold text-eco-700 bg-eco-100 px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm"
+              >
+                Save {formatEmissions(rec.potentialSavings)}
+              </span>
             </div>
-            <span
-              className="text-sm font-bold text-eco-600 bg-eco-50 px-3 py-1 rounded-full whitespace-nowrap"
-              aria-label={`Potential savings: ${formatEmissions(rec.potentialSavings)}`}
-            >
-              Save {formatEmissions(rec.potentialSavings)}
-            </span>
+            
+            <h3 className="font-bold capitalize text-slate-800 text-lg mb-2">{rec.category} Impact</h3>
+            <p className="text-slate-600 font-medium leading-relaxed flex-grow text-sm">{rec.recommendation}</p>
+            
+            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center text-eco-600 text-sm font-bold group-hover:gap-2 transition-all cursor-pointer w-max">
+              <span>Take Action</span>
+              <ArrowRight size={16} className="ml-1 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+            </div>
           </div>
-        </div>
-      ))}
+        )})}
+      </div>
     </div>
   );
 }

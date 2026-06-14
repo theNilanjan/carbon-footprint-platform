@@ -4,7 +4,7 @@
  */
 
 import axios from 'axios';
-import type { Recommendation } from '../../types.js';
+import type { Recommendation } from '../types.js';
 
 export class AIInsightsService {
   private apiKey: string;
@@ -96,7 +96,8 @@ Please provide recommendations in this JSON format:
    */
   private parseAIResponse(response: Record<string, unknown>): Recommendation[] {
     try {
-      const content = (response.choices?.[0]?.message?.content as string) || '';
+      const choices = response.choices as Array<{message?: {content?: string}}> | undefined;
+      const content = (choices?.[0]?.message?.content as string) || '';
       const jsonMatch = content.match(/\[[\s\S]*\]/);
 
       if (jsonMatch) {

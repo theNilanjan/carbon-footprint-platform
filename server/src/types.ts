@@ -56,3 +56,9 @@ export interface MonthlyTrend {
   emissions: number;
   category: ActivityCategory;
 }
+
+export interface Recommendation {
+  category: string;
+  recommendation: string;
+  potentialSavings: number;
+}

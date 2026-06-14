@@ -1,13 +1,12 @@
-/**
- * Activity Form Component
- */
-
 import { useState } from 'react';
 import type { Activity, ActivityCategory } from '../types';
+import { getCategoryIcon } from '../utils/helpers';
+import { Send, Calendar, Tag, Activity as ActivityIcon } from 'lucide-react';
 
 interface ActivityFormProps {
   onSubmit: (activity: Omit<Activity, 'id'>) => Promise<void>;
   loading?: boolean;
+  onSuccess?: () => void;
 }
 
 const ACTIVITY_TYPES: Record<ActivityCategory, string[]> = {
@@ -24,7 +23,7 @@ const UNITS: Record<ActivityCategory, string> = {
   shopping: 'dollars',
 };
 
-export function ActivityForm({ onSubmit, loading = false }: ActivityFormProps) {
+export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityFormProps) {
   const [category, setCategory] = useState<ActivityCategory>('transportation');
   const [type, setType] = useState('car');
   const [value, setValue] = useState('');
@@ -54,62 +53,77 @@ export function ActivityForm({ onSubmit, loading = false }: ActivityFormProps) {
       setDescription('');
       setType(ACTIVITY_TYPES[category][0]);
       setDate(new Date().toISOString().split('T')[0]);
+      if (onSuccess) onSuccess();
     } catch (error) {
       console.error('Error submitting activity:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-eco-700">Log Activity</h2>
+    <form onSubmit={handleSubmit} className="glass-card p-8">
+      <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-100">
+         <div className="bg-eco-100 text-eco-600 p-2.5 rounded-xl">
+           <ActivityIcon size={24} />
+         </div>
+         <div>
+           <h2 className="text-2xl font-bold text-slate-800">Log New Activity</h2>
+           <p className="text-sm text-slate-500 font-medium">Record your actions to calculate impact</p>
+         </div>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div>
-          <label htmlFor="category" className="block text-sm font-medium mb-2">
-            Category <span className="text-red-500">*</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="space-y-2">
+          <label htmlFor="category" className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+            <Tag size={16} className="text-slate-400" /> Category
           </label>
-          <select
-            id="category"
-            value={category}
-            onChange={(e) => {
-              const newCategory = e.target.value as ActivityCategory;
-              setCategory(newCategory);
-              setType(ACTIVITY_TYPES[newCategory][0]);
-            }}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
-            required
-          >
-            <option value="transportation">🚗 Transportation</option>
-            <option value="energy">⚡ Energy</option>
-            <option value="diet">🍔 Diet</option>
-            <option value="shopping">🛍️ Shopping</option>
-          </select>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
+              {getCategoryIcon(category, 18)}
+            </div>
+            <select
+              id="category"
+              value={category}
+              onChange={(e) => {
+                const newCategory = e.target.value as ActivityCategory;
+                setCategory(newCategory);
+                setType(ACTIVITY_TYPES[newCategory][0]);
+              }}
+              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors appearance-none font-medium text-slate-700"
+              required
+            >
+              <option value="transportation">Transportation</option>
+              <option value="energy">Energy</option>
+              <option value="diet">Diet</option>
+              <option value="shopping">Shopping</option>
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="type" className="block text-sm font-medium mb-2">
-            Type <span className="text-red-500">*</span>
+        <div className="space-y-2">
+          <label htmlFor="type" className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+            Specific Type
           </label>
           <select
             id="type"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors appearance-none font-medium text-slate-700 capitalize"
             required
           >
             {ACTIVITY_TYPES[category].map((t) => (
               <option key={t} value={t}>
-                {t.charAt(0).toUpperCase() + t.slice(1)}
+                {t}
               </option>
             ))}
           </select>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div>
-          <label htmlFor="value" className="block text-sm font-medium mb-2">
-            Value ({UNITS[category]}) <span className="text-red-500">*</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="space-y-2">
+          <label htmlFor="value" className="flex items-center justify-between text-sm font-semibold text-slate-700">
+            <span>Amount</span>
+            <span className="text-xs font-bold text-eco-600 bg-eco-50 px-2 py-0.5 rounded-md uppercase tracking-wider">{UNITS[category]}</span>
           </label>
           <input
             id="value"
@@ -118,52 +132,52 @@ export function ActivityForm({ onSubmit, loading = false }: ActivityFormProps) {
             step="0.1"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="Enter amount"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+            placeholder="0.0"
+            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors font-medium text-slate-700 placeholder:text-slate-400"
             required
-            aria-describedby="value-help"
           />
-          <p id="value-help" className="text-xs text-gray-500 mt-1">
-            Enter the quantity in {UNITS[category]}
-          </p>
         </div>
 
-        <div>
-          <label htmlFor="date" className="block text-sm font-medium mb-2">
-            Date <span className="text-red-500">*</span>
+        <div className="space-y-2">
+          <label htmlFor="date" className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+            <Calendar size={16} className="text-slate-400" /> Date
           </label>
           <input
             id="date"
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors font-medium text-slate-700"
             required
           />
         </div>
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="description" className="block text-sm font-medium mb-2">
-          Description (optional)
+      <div className="space-y-2 mb-8">
+        <label htmlFor="description" className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+          Notes (Optional)
         </label>
         <textarea
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Add any notes about this activity"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none h-24 resize-none"
-          maxLength={500}
+          placeholder="Add any extra details..."
+          rows={3}
+          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors font-medium text-slate-700 resize-none placeholder:text-slate-400"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-eco-600 hover:bg-eco-700 text-white font-medium py-2 px-4 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
-        aria-busy={loading}
+        className="w-full bg-eco-600 hover:bg-eco-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-eco-500/30 hover:shadow-eco-600/40"
       >
-        {loading ? 'Saving...' : 'Log Activity'}
+        {loading ? (
+           <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        ) : (
+           <Send size={18} />
+        )}
+        {loading ? 'Saving Activity...' : 'Log Activity'}
       </button>
     </form>
   );

@@ -84,8 +84,8 @@ export class CarbonCalculator {
       return 0;
     }
 
-    const factor = factors[type as keyof typeof factors];
-    return factor ? factor.factor : 0;
+    const factorObj = factors[type as keyof typeof factors] as {factor: number; unit: string} | undefined;
+    return factorObj?.factor || 0;
   }
 
   /**
