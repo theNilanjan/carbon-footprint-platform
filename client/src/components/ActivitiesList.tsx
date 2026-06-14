@@ -1,6 +1,6 @@
 import { formatEmissions, formatDate, getCategoryLightColor, getCategoryIcon } from '../utils/helpers';
 import type { Activity } from '../types';
-import { Trash2, Calendar, FileText } from 'lucide-react';
+import { Trash2, Calendar, FileText, Leaf, Zap, Utensils, ShoppingBag } from 'lucide-react';
 
 interface ActivitiesListProps {
   activities: Activity[] | null;
@@ -8,6 +8,20 @@ interface ActivitiesListProps {
   error: string | null;
   onDelete?: (id: string) => Promise<void>;
 }
+
+const CATEGORY_ICONS: Record<string, React.ReactNode> = {
+  transportation: <Leaf size={20} />,
+  energy: <Zap size={20} />,
+  diet: <Utensils size={20} />,
+  shopping: <ShoppingBag size={20} />,
+};
+
+const CATEGORY_EMOJIS: Record<string, string> = {
+  transportation: '🚗',
+  energy: '⚡',
+  diet: '🥗',
+  shopping: '🛍️',
+};
 
 export function ActivitiesList({ activities, loading, error, onDelete }: ActivitiesListProps) {
   if (error) return null; // Error handled in App
@@ -25,7 +39,7 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
   if (!activities || activities.length === 0) {
     return (
       <div className="bg-white rounded-3xl p-12 text-center flex flex-col items-center justify-center border-dashed border-2 border-slate-200 shadow-sm animate-fade-in">
-        <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4 text-slate-400">
+        <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mb-4 text-green-600">
           <FileText size={32} />
         </div>
         <h3 className="text-xl font-display font-bold text-slate-800 mb-2">No activities yet</h3>
@@ -38,7 +52,7 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-6 px-2">
         <h2 className="text-2xl font-display font-bold text-slate-800">Recent Activities</h2>
-        <span className="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1 rounded-full">{activities.length} total</span>
+        <span className="bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md shadow-green-500/30">{activities.length} total</span>
       </div>
       
       <div className="grid gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
@@ -48,18 +62,18 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
           return (
           <div
             key={activity.id}
-            className="bg-white rounded-2xl shadow-card hover:shadow-card-hover p-5 flex flex-col sm:flex-row sm:items-center justify-between group border border-slate-100 hover:border-eco-200 transition-all duration-300 animate-slide-up"
+            className="bg-white rounded-2xl shadow-card hover:shadow-card-hover p-5 flex flex-col sm:flex-row sm:items-center justify-between group border border-slate-100 hover:border-green-200 transition-all duration-300 animate-slide-up hover:-translate-y-0.5"
           >
             <div className="flex items-start sm:items-center gap-4 flex-1 mb-4 sm:mb-0">
               <div className={`p-3 rounded-2xl ${lightColorClass} shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105`}>
-                {getCategoryIcon(activity.category, 20)}
+                {CATEGORY_ICONS[activity.category] || getCategoryIcon(activity.category, 20)}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="font-bold text-slate-800 capitalize text-lg">
-                    {activity.type}
+                    {CATEGORY_EMOJIS[activity.category]} {activity.type}
                   </h3>
-                  <span className="text-xs font-bold bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-lg uppercase tracking-wide">
+                  <span className="text-xs font-bold bg-gradient-to-r from-slate-100 to-slate-200 text-slate-600 px-2.5 py-0.5 rounded-lg uppercase tracking-wide">
                     {activity.category}
                   </span>
                 </div>
@@ -75,7 +89,7 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
                 </div>
                 
                 {activity.description && (
-                  <p className="text-sm text-slate-600 mt-2 bg-slate-50 p-2 rounded-lg inline-block w-full">{activity.description}</p>
+                  <p className="text-sm text-slate-600 mt-2 bg-gradient-to-r from-slate-50 to-slate-100 p-2 rounded-lg inline-block w-full">{activity.description}</p>
                 )}
               </div>
             </div>
@@ -83,14 +97,14 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
             <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-48 pt-4 sm:pt-0 border-t sm:border-t-0 border-slate-100 sm:border-l sm:pl-6">
               <div className="text-left sm:text-right">
                 <div className="text-sm font-semibold text-slate-500 mb-0.5">Emissions</div>
-                <div className="font-black text-lg text-eco-600 tracking-tight">
+                <div className="font-black text-lg text-green-600 tracking-tight">
                   {formatEmissions(activity.carbonEmissions || 0)}
                 </div>
               </div>
               {onDelete && (
                 <button
                   onClick={() => activity.id && onDelete(activity.id)}
-                  className="text-slate-400 hover:text-red-500 p-2.5 hover:bg-red-50 rounded-xl transition-all duration-200"
+                  className="text-slate-400 hover:text-red-500 p-2.5 hover:bg-red-50 rounded-xl transition-all duration-200 hover:scale-110"
                   aria-label="Delete activity"
                   title="Delete this activity"
                 >

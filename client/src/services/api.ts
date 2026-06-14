@@ -9,7 +9,9 @@ class ApiService {
   private client: AxiosInstance;
 
   constructor() {
-    const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    // Use relative URL to leverage Vite proxy in development
+    // The proxy will forward /api requests to http://127.0.0.1:5000
+    const baseURL = import.meta.env.VITE_API_URL || '';
     this.client = axios.create({
       baseURL,
       headers: {

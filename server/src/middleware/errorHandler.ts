@@ -3,7 +3,7 @@
  */
 
 import type { Request, Response, NextFunction } from 'express';
-import type { ApiResponse } from '../types.js';
+import type { ApiResponse } from '../types';
 
 export class ApiError extends Error {
   constructor(

@@ -4,10 +4,10 @@
  */
 
 import { Router, Request, Response, NextFunction } from 'express';
-import { CarbonCalculator } from '../services/carbonCalculator.js';
-import { validateActivityInput } from '../utils/validators.js';
-import { ApiError } from '../middleware/errorHandler.js';
-import type { Activity, ApiResponse } from '../types.js';
+import { CarbonCalculator } from '../services/carbonCalculator';
+import { validateActivityInput } from '../utils/validators';
+import { ApiError } from '../middleware/errorHandler';
+import type { Activity, ApiResponse } from '../types';
 
 const router = Router();
 

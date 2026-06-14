@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import type { Activity, ActivityCategory } from '../types';
-import { getCategoryIcon } from '../utils/helpers';
-import { Send, Calendar, Tag, Activity as ActivityIcon } from 'lucide-react';
+import { Calendar, Tag, Activity as ActivityIcon, Sparkles } from 'lucide-react';
 
 interface ActivityFormProps {
   onSubmit: (activity: Omit<Activity, 'id'>) => Promise<void>;
@@ -21,6 +20,13 @@ const UNITS: Record<ActivityCategory, string> = {
   energy: 'kWh',
   diet: 'kg',
   shopping: 'dollars',
+};
+
+const CATEGORY_EMOJIS: Record<ActivityCategory, string> = {
+  transportation: '🚗',
+  energy: '⚡',
+  diet: '🥗',
+  shopping: '🛍️',
 };
 
 export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityFormProps) {
@@ -62,7 +68,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-card p-8 border border-slate-100 animate-slide-up transition-all">
       <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-100">
-         <div className="bg-eco-100 text-eco-600 p-3 rounded-2xl shadow-sm">
+         <div className="bg-gradient-to-br from-green-400 to-green-600 text-white p-3 rounded-2xl shadow-lg shadow-green-500/30">
            <ActivityIcon size={24} />
          </div>
          <div>
@@ -77,8 +83,8 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
             <Tag size={16} className="text-slate-400" /> Category
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
-              {getCategoryIcon(category, 18)}
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400 text-lg">
+              {CATEGORY_EMOJIS[category]}
             </div>
             <select
               id="category"
@@ -88,13 +94,13 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
                 setCategory(newCategory);
                 setType(ACTIVITY_TYPES[newCategory][0]);
               }}
-              className="w-full pl-10 pr-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 appearance-none font-medium text-slate-700 shadow-sm"
+              className="w-full pl-12 pr-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all duration-200 appearance-none font-medium text-slate-700 shadow-sm cursor-pointer"
               required
             >
-              <option value="transportation">Transportation</option>
-              <option value="energy">Energy</option>
-              <option value="diet">Diet</option>
-              <option value="shopping">Shopping</option>
+              <option value="transportation">🚗 Transportation</option>
+              <option value="energy">⚡ Energy</option>
+              <option value="diet">🥗 Diet</option>
+              <option value="shopping">🛍️ Shopping</option>
             </select>
           </div>
         </div>
@@ -107,7 +113,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
             id="type"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 appearance-none font-medium text-slate-700 capitalize shadow-sm"
+            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all duration-200 appearance-none font-medium text-slate-700 capitalize shadow-sm cursor-pointer"
             required
           >
             {ACTIVITY_TYPES[category].map((t) => (
@@ -123,7 +129,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
         <div className="space-y-2">
           <label htmlFor="value" className="flex items-center justify-between text-sm font-semibold text-slate-700">
             <span>Amount</span>
-            <span className="text-xs font-bold text-eco-600 bg-eco-50 px-2 py-0.5 rounded-md uppercase tracking-wider">{UNITS[category]}</span>
+            <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-md uppercase tracking-wider">{UNITS[category]}</span>
           </label>
           <input
             id="value"
@@ -133,7 +139,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="0.0"
-            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 font-medium text-slate-700 placeholder:text-slate-400 shadow-sm"
+            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all duration-200 font-medium text-slate-700 placeholder:text-slate-400 shadow-sm"
             required
           />
         </div>
@@ -147,7 +153,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 font-medium text-slate-700 shadow-sm"
+            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all duration-200 font-medium text-slate-700 shadow-sm cursor-pointer"
             required
           />
         </div>
@@ -163,21 +169,24 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Add any extra details..."
           rows={3}
-          className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 font-medium text-slate-700 resize-none placeholder:text-slate-400 shadow-sm"
+          className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all duration-200 font-medium text-slate-700 resize-none placeholder:text-slate-400 shadow-sm"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-eco-600 hover:bg-eco-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-card hover:shadow-card-hover hover:-translate-y-0.5"
+        className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 hover:-translate-y-0.5"
       >
         {loading ? (
            <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
         ) : (
-           <Send size={18} />
+           <>
+             <Sparkles size={18} />
+             <span>Log Activity</span>
+           </>
         )}
-        {loading ? 'Saving Activity...' : 'Log Activity'}
+        {loading ? 'Saving Activity...' : ''}
       </button>
     </form>
   );

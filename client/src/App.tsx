@@ -89,7 +89,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-slate-50 relative overflow-hidden flex flex-col font-sans">
       {/* Background decoration */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-eco-200/50 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-green-200/50 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-100/50 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
@@ -97,11 +97,11 @@ export function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-eco-400 to-eco-600 rounded-xl flex items-center justify-center shadow-lg shadow-eco-500/30 text-white">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/30 text-white">
                 <Leaf size={22} strokeWidth={2.5} />
               </div>
               <div>
-                <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-eco-800 to-slate-800 tracking-tight">
+                <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-slate-800 tracking-tight">
                   EcoTracker
                 </h1>
                 <p className="text-xs text-slate-500 font-medium">Monitor & reduce your impact</p>
@@ -110,10 +110,10 @@ export function App() {
             <button
               onClick={() => loadAllData(true)}
               disabled={isRefreshing || loading}
-              className="p-2.5 text-slate-500 hover:text-eco-600 hover:bg-eco-50 rounded-xl transition-all duration-200 disabled:opacity-50 group border border-transparent hover:border-eco-100"
+              className="p-2.5 text-slate-500 hover:text-green-600 hover:bg-green-50 rounded-xl transition-all duration-200 disabled:opacity-50 group border border-transparent hover:border-green-100"
               aria-label="Refresh data"
             >
-              <RefreshCw size={20} className={`${isRefreshing ? 'animate-spin text-eco-500' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
+              <RefreshCw size={20} className={`${isRefreshing ? 'animate-spin text-green-500' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
             </button>
           </div>
         </div>
@@ -128,11 +128,11 @@ export function App() {
               onClick={() => setActiveTab(tab.id as Tab)}
               className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-300 min-w-[120px] ${
                 activeTab === tab.id
-                  ? 'bg-white text-eco-700 shadow-sm border border-slate-100'
+                  ? 'bg-white text-green-700 shadow-sm border border-slate-100'
                   : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100/50'
               }`}
             >
-              <span className={activeTab === tab.id ? 'text-eco-600' : 'text-slate-400'}>{tab.icon}</span>
+              <span className={activeTab === tab.id ? 'text-green-600' : 'text-slate-400'}>{tab.icon}</span>
               {tab.label}
             </button>
           ))}
@@ -192,7 +192,7 @@ export function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
             <div className="flex items-center gap-2">
-              <Leaf size={16} className="text-eco-500" />
+              <Leaf size={16} className="text-green-500" />
               <span className="font-medium">EcoTracker &copy; 2026</span>
             </div>
             <p>Built for a sustainable world</p>

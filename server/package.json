@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "Backend server for Carbon Footprint Platform",
   "main": "dist/index.js",
-  "type": "module",
   "scripts": {
-    "dev": "ts-node --esm src/index.ts",
+    "dev": "ts-node src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "jest",

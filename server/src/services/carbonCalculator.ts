@@ -3,7 +3,7 @@
  * Uses standard EPA/IPCC emission factors
  */
 
-import type { Activity, FootprintCalculation } from '../types.js';
+import type { Activity, FootprintCalculation } from '../types';
 
 // Standardized emission factors (kg CO2 per unit)
 const EMISSION_FACTORS = {

@@ -7,10 +7,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 
-import activitiesRouter from './routes/activities.js';
-import footprintRouter from './routes/footprint.js';
-import { errorHandler } from './middleware/errorHandler.js';
-import type { ApiResponse } from './types.js';
+import activitiesRouter from './routes/activities';
+import footprintRouter from './routes/footprint';
+import { errorHandler } from './middleware/errorHandler';
+import type { ApiResponse } from './types';
 
 // Load environment variables
 dotenv.config();
@@ -20,9 +20,9 @@ const PORT = process.env.PORT || 5000;
 
 // Security middleware
 app.use(helmet());
-// Allow requests from standard React (3000) and Vite (5173) ports
+// Allow requests from standard React (3000), Vite (5173), and fallback (3001) ports
 app.use(cors({ 
-  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:5173'],
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://127.0.0.1:3001'],
   credentials: true
 }));
 

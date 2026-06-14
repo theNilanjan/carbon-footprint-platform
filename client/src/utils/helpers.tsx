@@ -1,4 +1,4 @@
-import { Car, Zap, Utensils, ShoppingBag, Leaf, Bus, Lightbulb, Salad, Recycle, Plane, Bike, Home } from 'lucide-react';
+import { Car, Zap, Utensils, ShoppingBag, Leaf, Bus, Lightbulb, Salad, Recycle } from 'lucide-react';
 import React from 'react';
 
 export function formatEmissions(value: number): string {
@@ -19,8 +19,8 @@ export function formatDate(dateString: string): string {
 export function getCategoryColor(category: string): string {
   const colors: Record<string, string> = {
     transportation: 'bg-blue-500',
-    energy: 'bg-amber-500',
-    diet: 'bg-emerald-500',
+    energy: 'bg-yellow-500',
+    diet: 'bg-green-500',
     shopping: 'bg-purple-500',
   };
   return colors[category] || 'bg-slate-500';
@@ -29,8 +29,8 @@ export function getCategoryColor(category: string): string {
 export function getCategoryLightColor(category: string): string {
   const colors: Record<string, string> = {
     transportation: 'bg-blue-50 text-blue-600 border-blue-200',
-    energy: 'bg-amber-50 text-amber-600 border-amber-200',
-    diet: 'bg-emerald-50 text-emerald-600 border-emerald-200',
+    energy: 'bg-yellow-50 text-yellow-600 border-yellow-200',
+    diet: 'bg-green-50 text-green-600 border-green-200',
     shopping: 'bg-purple-50 text-purple-600 border-purple-200',
   };
   return colors[category] || 'bg-slate-50 text-slate-600 border-slate-200';
