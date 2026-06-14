@@ -10,7 +10,7 @@
     "test": "concurrently \"cd server && npm test\" \"cd client && npm test -- --watchAll=false\"",
     "start": "cd server && npm start",
     "lint": "concurrently \"cd server && npm run lint\" \"cd client && npm run lint\"",
-    "vercel-build": "npm run build"
+    "vercel-build": "npm run build",
     "format": "concurrently \"cd server && npm run format\" \"cd client && npm run format\""
   },
   "keywords": ["carbon", "footprint", "sustainability", "environment", "ai"],
