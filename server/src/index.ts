@@ -21,8 +21,12 @@ const PORT = process.env.PORT || 5000;
 // Security middleware
 app.use(helmet());
 // Allow requests from standard React (3000), Vite (5173), and fallback (3001) ports
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? [process.env.FRONTEND_URL || 'https://your-app.vercel.app']
+  : ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://127.0.0.1:3001'];
+
 app.use(cors({ 
-  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://127.0.0.1:3001'],
+  origin: allowedOrigins,
   credentials: true
 }));
 
@@ -62,4 +66,5 @@ const server = app.listen(Number(PORT), '127.0.0.1', () => {
   console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
+// Export for Vercel serverless
 export default app;

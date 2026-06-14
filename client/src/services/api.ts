@@ -10,8 +10,8 @@ class ApiService {
 
   constructor() {
     // Use relative URL to leverage Vite proxy in development
-    // The proxy will forward /api requests to http://127.0.0.1:5000
-    const baseURL = import.meta.env.VITE_API_URL || '';
+    // In production, Vercel will handle API routing
+    const baseURL = '';
     this.client = axios.create({
       baseURL,
       headers: {
