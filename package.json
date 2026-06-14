@@ -13,10 +13,17 @@
     "vercel-build": "npm run build",
     "format": "concurrently \"cd server && npm run format\" \"cd client && npm run format\""
   },
-  "keywords": ["carbon", "footprint", "sustainability", "environment", "ai"],
+  "keywords": [
+    "carbon",
+    "footprint",
+    "sustainability",
+    "environment",
+    "ai"
+  ],
   "author": "Developer",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^25.9.3",
     "concurrently": "^8.2.0"
   },
   "engines": {
