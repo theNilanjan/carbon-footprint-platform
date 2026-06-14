@@ -21,7 +21,6 @@ This solution is built as an intelligent assistant that helps users:
 3. Receive AI-generated personalized recommendations
 4. Track progress toward sustainability goals
 
-## Architecture
 
 ### Technology Stack
 
