@@ -60,13 +60,13 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
   };
 
   return (
-    <form onSubmit={handleSubmit} className="glass-card p-8">
+    <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-card p-8 border border-slate-100 animate-slide-up transition-all">
       <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-100">
-         <div className="bg-eco-100 text-eco-600 p-2.5 rounded-xl">
+         <div className="bg-eco-100 text-eco-600 p-3 rounded-2xl shadow-sm">
            <ActivityIcon size={24} />
          </div>
          <div>
-           <h2 className="text-2xl font-bold text-slate-800">Log New Activity</h2>
+           <h2 className="text-2xl font-display font-bold text-slate-800">Log New Activity</h2>
            <p className="text-sm text-slate-500 font-medium">Record your actions to calculate impact</p>
          </div>
       </div>
@@ -88,7 +88,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
                 setCategory(newCategory);
                 setType(ACTIVITY_TYPES[newCategory][0]);
               }}
-              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors appearance-none font-medium text-slate-700"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 appearance-none font-medium text-slate-700 shadow-sm"
               required
             >
               <option value="transportation">Transportation</option>
@@ -107,7 +107,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
             id="type"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors appearance-none font-medium text-slate-700 capitalize"
+            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 appearance-none font-medium text-slate-700 capitalize shadow-sm"
             required
           >
             {ACTIVITY_TYPES[category].map((t) => (
@@ -133,7 +133,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="0.0"
-            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors font-medium text-slate-700 placeholder:text-slate-400"
+            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 font-medium text-slate-700 placeholder:text-slate-400 shadow-sm"
             required
           />
         </div>
@@ -147,7 +147,7 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors font-medium text-slate-700"
+            className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 font-medium text-slate-700 shadow-sm"
             required
           />
         </div>
@@ -163,14 +163,14 @@ export function ActivityForm({ onSubmit, loading = false, onSuccess }: ActivityF
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Add any extra details..."
           rows={3}
-          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 transition-colors font-medium text-slate-700 resize-none placeholder:text-slate-400"
+          className="w-full px-4 py-3 bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 rounded-xl focus:ring-4 focus:ring-eco-500/10 focus:border-eco-500 transition-all duration-200 font-medium text-slate-700 resize-none placeholder:text-slate-400 shadow-sm"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-eco-600 hover:bg-eco-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-eco-500/30 hover:shadow-eco-600/40"
+        className="w-full bg-eco-600 hover:bg-eco-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-card hover:shadow-card-hover hover:-translate-y-0.5"
       >
         {loading ? (
            <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

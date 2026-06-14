@@ -16,7 +16,7 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
     return (
       <div className="space-y-4">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="glass-card h-24 animate-pulse bg-white/40" />
+          <div key={i} className="bg-white/60 border border-slate-100 rounded-2xl shadow-sm h-28 animate-pulse" />
         ))}
       </div>
     );
@@ -24,12 +24,12 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
 
   if (!activities || activities.length === 0) {
     return (
-      <div className="glass-card p-12 text-center flex flex-col items-center justify-center border-dashed border-2 border-slate-200">
+      <div className="bg-white rounded-3xl p-12 text-center flex flex-col items-center justify-center border-dashed border-2 border-slate-200 shadow-sm animate-fade-in">
         <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4 text-slate-400">
           <FileText size={32} />
         </div>
-        <h3 className="text-xl font-bold text-slate-700 mb-2">No activities yet</h3>
-        <p className="text-slate-500 max-w-sm mx-auto">Start logging your daily activities to build your carbon footprint profile.</p>
+        <h3 className="text-xl font-display font-bold text-slate-800 mb-2">No activities yet</h3>
+        <p className="text-slate-500 max-w-sm mx-auto font-medium">Start logging your daily activities to build your carbon footprint profile.</p>
       </div>
     );
   }
@@ -37,7 +37,7 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-6 px-2">
-        <h2 className="text-xl font-bold text-slate-800">Recent Activities</h2>
+        <h2 className="text-2xl font-display font-bold text-slate-800">Recent Activities</h2>
         <span className="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1 rounded-full">{activities.length} total</span>
       </div>
       
@@ -48,10 +48,10 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
           return (
           <div
             key={activity.id}
-            className="glass-card p-5 flex flex-col sm:flex-row sm:items-center justify-between group hover:border-eco-200 transition-colors"
+            className="bg-white rounded-2xl shadow-card hover:shadow-card-hover p-5 flex flex-col sm:flex-row sm:items-center justify-between group border border-slate-100 hover:border-eco-200 transition-all duration-300 animate-slide-up"
           >
             <div className="flex items-start sm:items-center gap-4 flex-1 mb-4 sm:mb-0">
-              <div className={`p-3 rounded-xl ${lightColorClass} shrink-0`}>
+              <div className={`p-3 rounded-2xl ${lightColorClass} shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105`}>
                 {getCategoryIcon(activity.category, 20)}
               </div>
               <div className="flex-1 min-w-0">
@@ -59,7 +59,7 @@ export function ActivitiesList({ activities, loading, error, onDelete }: Activit
                   <h3 className="font-bold text-slate-800 capitalize text-lg">
                     {activity.type}
                   </h3>
-                  <span className="text-xs font-semibold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md uppercase">
+                  <span className="text-xs font-bold bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-lg uppercase tracking-wide">
                     {activity.category}
                   </span>
                 </div>

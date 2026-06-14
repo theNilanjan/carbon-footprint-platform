@@ -7,7 +7,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { CarbonCalculator } from '../services/carbonCalculator.js';
 import { ApiError } from '../middleware/errorHandler.js';
 import { activities } from './activities.js';
-import type { ApiResponse, FootprintSummary } from '../types.js';
+import type { ApiResponse } from '../types.js';
 
 const router = Router();
 
@@ -49,20 +49,25 @@ router.get('/breakdown', (_req: Request, res: Response): void => {
   const byCategory = CarbonCalculator.groupByCategory(allActivities);
   const total = Object.values(byCategory).reduce((sum, val) => sum + val, 0);
 
+  // Fallback to 0 if category hasn't been logged yet to prevent NaN issues
+  const transportation = byCategory.transportation || 0;
+  const energy = byCategory.energy || 0;
+  const diet = byCategory.diet || 0;
+  const shopping = byCategory.shopping || 0;
+
   const breakdown = {
     total: Math.round(total * 100) / 100,
     byCategory: {
-      transportation: Math.round(byCategory.transportation * 100) / 100,
-      energy: Math.round(byCategory.energy * 100) / 100,
-      diet: Math.round(byCategory.diet * 100) / 100,
-      shopping: Math.round(byCategory.shopping * 100) / 100,
+      transportation: Math.round(transportation * 100) / 100,
+      energy: Math.round(energy * 100) / 100,
+      diet: Math.round(diet * 100) / 100,
+      shopping: Math.round(shopping * 100) / 100,
     },
     percentage: {
-      transportation:
-        total > 0 ? Math.round((byCategory.transportation / total) * 100) : 0,
-      energy: total > 0 ? Math.round((byCategory.energy / total) * 100) : 0,
-      diet: total > 0 ? Math.round((byCategory.diet / total) * 100) : 0,
-      shopping: total > 0 ? Math.round((byCategory.shopping / total) * 100) : 0,
+      transportation: total > 0 ? Math.round((transportation / total) * 100) : 0,
+      energy: total > 0 ? Math.round((energy / total) * 100) : 0,
+      diet: total > 0 ? Math.round((diet / total) * 100) : 0,
+      shopping: total > 0 ? Math.round((shopping / total) * 100) : 0,
     },
   };
 

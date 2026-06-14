@@ -17,11 +17,14 @@ dotenv.config();
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
-const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
 
 // Security middleware
 app.use(helmet());
-app.use(cors({ origin: CORS_ORIGIN }));
+// Allow requests from standard React (3000) and Vite (5173) ports
+app.use(cors({ 
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:5173'],
+  credentials: true
+}));
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
@@ -53,9 +56,9 @@ app.use((_req, res) => {
 app.use(errorHandler);
 
 // Start server
-const server = app.listen(PORT, () => {
-  console.log(`✓ Server is running on http://localhost:${PORT}`);
-  console.log(`✓ CORS enabled for: ${CORS_ORIGIN}`);
+const server = app.listen(Number(PORT), '127.0.0.1', () => {
+  console.log(`✓ Server is running on http://127.0.0.1:${PORT}`);
+  console.log(`✓ CORS enabled for local frontend domains`);
   console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 

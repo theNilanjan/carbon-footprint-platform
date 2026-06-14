@@ -3,8 +3,8 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { Dashboard } from '../Dashboard';
-import type { FootprintData } from '../../types';
+import { Dashboard } from './Dashboard';
+import type { FootprintData } from '../types';
 
 describe('Dashboard Component', () => {
   const mockData: FootprintData = {
