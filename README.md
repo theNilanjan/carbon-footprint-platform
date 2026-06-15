@@ -350,6 +350,14 @@ For questions about this project, please refer to the GitHub Issues section.
 
 ---
 
+## 👨‍💻 Developer
+
+**Developed by**: **Nilanjan Ghosh**
+
+This Carbon Footprint Awareness Platform was designed and built with a focus on sustainability, accessibility, and user experience.
+
+---
+
 
 
 **Submission Date**: 2026-06-11  

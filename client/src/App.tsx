@@ -195,7 +195,7 @@ export function App() {
               <Leaf size={16} className="text-green-500" />
               <span className="font-medium">EcoTracker &copy; 2026</span>
             </div>
-            <p>Built for a sustainable world</p>
+            <p className="font-semibold text-slate-700">Developed by Nilanjan Ghosh</p>
           </div>
         </div>
       </footer>
