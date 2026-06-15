@@ -13,7 +13,6 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "module": "Node16",
     "moduleResolution": "node16"
   },
   "include": ["src/**/*"],
