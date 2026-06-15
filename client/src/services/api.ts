@@ -9,9 +9,8 @@ class ApiService {
   private client: AxiosInstance;
 
   constructor() {
-    // Use relative URL to leverage Vite proxy in development
-    // In production, Vercel will handle API routing
-    const baseURL = '';
+    // Use environment variable for API URL, fallback to empty string for Vite proxy in development
+    const baseURL = import.meta.env.VITE_API_URL || '';
     this.client = axios.create({
       baseURL,
       headers: {

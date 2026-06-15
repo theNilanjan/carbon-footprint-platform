@@ -60,8 +60,8 @@ app.use((_req, res) => {
 app.use(errorHandler);
 
 // Start server
-const server = app.listen(Number(PORT), '127.0.0.1', () => {
-  console.log(`✓ Server is running on http://127.0.0.1:${PORT}`);
+const server = app.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`✓ Server is running on http://0.0.0.0:${PORT}`);
   console.log(`✓ CORS enabled for local frontend domains`);
   console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
 });
