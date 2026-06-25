@@ -20,64 +20,6 @@ This solution is built as an intelligent assistant that helps users:
 2. Understand which activities have the highest environmental impact
 3. Receive AI-generated personalized recommendations
 4. Track progress toward sustainability goals
-
-
-### Technology Stack
-
-```
-Frontend:
-- React 18+ with TypeScript
-- Tailwind CSS for styling
-- Axios for API communication
-- React Query for state management
-- Vitest & React Testing Library for testing
-
-Backend:
-- Node.js/Express server
-- RESTful API architecture
-- Carbon calculation engine
-- Database integration ready
-- OpenAI/Claude API for AI insights
-
-DevOps:
-- Git/GitHub for version control
-- ESLint + Prettier for code quality
-- Jest + React Testing Library for testing
-- Accessibility testing tools
-```
-
-### Project Structure
-
-```
-carbon-footprint-platform/
-├── server/                 # Express backend
-│   ├── src/
-│   │   ├── routes/        # API endpoints
-│   │   ├── controllers/   # Request handlers
-│   │   ├── services/      # Business logic
-│   │   ├── middleware/    # Auth, validation
-│   │   ├── utils/         # Helpers & utilities
-│   │   └── index.ts       # Server entry point
-│   ├── tests/             # Test suites
-│   ├── .env.example       # Environment template
-│   └── package.json
-│
-├── client/                # React frontend
-│   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── pages/         # Page components
-│   │   ├── services/      # API services
-│   │   ├── hooks/         # Custom React hooks
-│   │   ├── utils/         # Utility functions
-│   │   ├── types/         # TypeScript types
-│   │   ├── App.tsx        # Main app component
-│   │   └── main.tsx       # Entry point
-│   ├── tests/             # Test suites
-│   ├── public/            # Static assets
-│   └── package.json
-│
-├── package.json           # Root package configuration
-└── README.md             # This file
 ```
 
 ## Key Features
@@ -89,11 +31,6 @@ carbon-footprint-platform/
 - **Shopping**: Estimate carbon from purchases
 - Real-time calculation with accurate emission factors
 
-### 2. AI Assistant
-- Analyzes user activity patterns
-- Generates personalized recommendations
-- Provides context-specific insights
-- Explains environmental impact in relatable terms
 
 ### 3. User Dashboard
 - Visual carbon footprint breakdown (pie charts)
@@ -238,33 +175,6 @@ Shopping:
 - Focus management for interactive elements
 - Alt text for all images
 
-## API Endpoints
-
-### User Activities
-```
-POST   /api/activities          - Add new activity
-GET    /api/activities          - Get user's activities
-GET    /api/activities/:id      - Get activity details
-PUT    /api/activities/:id      - Update activity
-DELETE /api/activities/:id      - Delete activity
-```
-
-### Carbon Calculations
-```
-GET    /api/footprint/total     - Get total carbon footprint
-GET    /api/footprint/breakdown - Get breakdown by category
-POST   /api/footprint/calculate - Calculate emissions for activities
-```
-
-### AI Insights
-```
-POST   /api/insights/generate   - Generate personalized recommendations
-GET    /api/insights/history    - Get past insights
-```
-
-### Health Check
-```
-GET    /health                  - API health status
 ```
 
 ## Testing Coverage
@@ -331,19 +241,6 @@ npm install
 OPENAI_API_KEY=your_key_here
 ```
 
-## Contributing
-
-While this is a submission project, the codebase is structured to be maintainable and extensible:
-
-- Follow the existing code style (Prettier + ESLint)
-- Add tests for new features
-- Update README for significant changes
-- Use meaningful commit messages
-
-## License
-
-MIT License - See LICENSE file for details
-
 ## Contact & Support
 
 For questions about this project, please refer to the GitHub Issues section.
@@ -359,29 +256,6 @@ This Carbon Footprint Awareness Platform was designed and built with a focus on 
 ---
 
 
-
-**Submission Date**: 2026-06-11  
-**Challenge**: [Challenge 3] Carbon Footprint Awareness Platform  
-**Status**: ✅ Complete & Ready for Evaluation  
-**Repository Size**: 0.14 MB  
-**Test Coverage**: 80%+  
-
 ---
 
-## 🎯 What Makes This Solution Unique
 
-1. **Smart Carbon Calculations**: Accurate emission factors based on EPA/IPCC data
-2. **AI-Ready Architecture**: Prepared for Claude/OpenAI integration
-3. **Accessible Design**: Full WCAG compliance from the start
-4. **Production-Ready**: Security, testing, and documentation included
-5. **Scalable Architecture**: Ready for database integration
-
-## 📊 Project Statistics
-
-- **Total Files**: 47
-- **Lines of Code**: ~2,800
-- **Test Cases**: 15+
-- **TypeScript Coverage**: 100%
-- **Documentation**: Comprehensive
-- **Build Time**: <30s
-- **Performance Score**: 90+
